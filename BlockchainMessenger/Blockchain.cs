@@ -76,7 +76,7 @@ namespace BlockchainMessenger
                 arguments = buffer.Split(new string[] {":", Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
                 Hash = Program.CalculateHash(arguments[1] + arguments[3] + arguments[5] + Hash + arguments[9]) ;
                 if (arguments[11] != Hash)
-                    Console.WriteLine(i + " is wrong\n" + arguments[11] + "\n" + Hash);
+                    Console.WriteLine(i + " is wrong\n" + arguments[11] + " expected\n" + Hash + " received");
                 else 
                     Console.WriteLine(i + " is good");
                 i++;

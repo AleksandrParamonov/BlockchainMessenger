@@ -25,15 +25,7 @@ namespace BlockchainMessenger
             Block bl = new Block();
             Blockchain bla = new Blockchain();
             bla.ValidateBlockchain();
-            /*bl.toFile("testfile.txt");
-            for(int i = 0; i < 100; i++)
-                {
-                bl = new Block(bl, (i + 1).ToString());
-                bl.toFile("123");
-
-
-                } */    
-
+    
             Console.WriteLine("done");
             Console.ReadKey();
         }
