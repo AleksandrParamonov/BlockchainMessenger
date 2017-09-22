@@ -1,0 +1,10 @@
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\bin\Debug\msgr_gui.exe.config
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\bin\Debug\msgr_gui.exe
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\bin\Debug\msgr_gui.pdb
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.csprojResolveAssemblyReference.cache
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.Form1.resources
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.Properties.Resources.resources
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.csproj.GenerateResource.Cache
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.csproj.CoreCompileInputs.cache
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.exe
+C:\Users\jackb\source\repos\msgr_gui\msgr_gui\obj\Debug\msgr_gui.pdb
