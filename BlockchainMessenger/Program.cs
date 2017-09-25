@@ -21,7 +21,12 @@ namespace BlockchainMessenger
 
         static void Main(string[] args)
         {
-            Console.WriteLine("done");
+            Messenger test1 = new Messenger("test1");
+            Messenger test2 = new Messenger("test2");
+
+            Console.WriteLine("secret for user1 " + test1.GetSharedSecretString(test2.GetPublicKey()));
+            Console.WriteLine("secret for user2 " + test2.GetSharedSecretString(test1.GetPublicKey()));
+
             Console.ReadKey();
         }
         
