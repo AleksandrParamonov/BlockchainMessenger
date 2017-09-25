@@ -21,11 +21,6 @@ namespace BlockchainMessenger
 
         static void Main(string[] args)
         {
-            Random rand = new Random();                                           
-            Block bl = new Block();
-            Blockchain bla = new Blockchain();
-            bla.ValidateBlockchain();
-    
             Console.WriteLine("done");
             Console.ReadKey();
         }
