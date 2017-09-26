@@ -52,6 +52,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AESCrypto.cs" />
     <Compile Include="Blockchain.cs" />
     <Compile Include="Messenger.cs" />
     <Compile Include="Program.cs" />

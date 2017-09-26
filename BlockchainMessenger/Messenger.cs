@@ -10,6 +10,7 @@ namespace BlockchainMessenger
     {
         string userName;
         private Rebex.Security.Cryptography.Curve25519 EllipticCurve;
+        private System.Security.Cryptography.Aes aes;
         public string GetPrivateKeyString() //following functions will return formatted keys for current user
         {
             return BitConverter.ToString(EllipticCurve.GetPrivateKey()).Replace("-", string.Empty);
@@ -66,6 +67,8 @@ namespace BlockchainMessenger
             EllipticCurve = Rebex.Security.Cryptography.Curve25519.Create(Rebex.Security.Cryptography.Curve25519.Curve25519Sha256);
             EllipticCurve.FromPrivateKey(privateKey);
         }
+
+
 
     }
 }

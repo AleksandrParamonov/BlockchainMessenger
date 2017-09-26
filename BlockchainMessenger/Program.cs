@@ -27,6 +27,11 @@ namespace BlockchainMessenger
             Console.WriteLine("secret for user1 " + test1.GetSharedSecretString(test2.GetPublicKey()));
             Console.WriteLine("secret for user2 " + test2.GetSharedSecretString(test1.GetPublicKey()));
 
+           string a1 = AESCrypto.EncryptToString("12", test1.GetPublicKeyString());
+            byte[] a2 = AESCrypto.Decrypt(a1, test1.GetPublicKeyString());
+            //string a2 = AESCrypto.DecryptToString(a1, test1.GetPublicKeyString());
+            Console.WriteLine(Encoding.UTF8.GetString(a2));
+
             Console.ReadKey();
         }
         
