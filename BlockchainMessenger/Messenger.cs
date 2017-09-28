@@ -74,7 +74,8 @@ namespace BlockchainMessenger
 
         public void SendMessageTo(string message, byte[] otherPublicKey)
         {
-            blockchain.AddBlock(AESCrypto.EncryptToString(message, this.GetSharedSecretString(otherPublicKey)));
+            if (message.Length > 0)
+                blockchain.AddBlock(AESCrypto.EncryptToString(message, this.GetSharedSecretString(otherPublicKey)));
         }
 
         public void CheckMessagesFrom(byte[] otherPublicKey)
