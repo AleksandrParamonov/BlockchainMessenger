@@ -47,17 +47,24 @@ namespace BlockchainMessenger
 
         public static byte[] Decrypt(byte[] cipher, string password)
         {
-            MemoryStream memoryStream;
-            CryptoStream cryptoStream;
-            Rijndael rijndael = Rijndael.Create();
-            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, SALT);
-            rijndael.Key = pdb.GetBytes(32);
-            rijndael.IV = pdb.GetBytes(16);
-            memoryStream = new MemoryStream();
-            cryptoStream = new CryptoStream(memoryStream, rijndael.CreateDecryptor(), CryptoStreamMode.Write);
-            cryptoStream.Write(cipher, 0, cipher.Length);
-            cryptoStream.Close();
-            return memoryStream.ToArray();
+            try
+            {
+                MemoryStream memoryStream;
+                CryptoStream cryptoStream;
+                Rijndael rijndael = Rijndael.Create();
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(password, SALT);
+                rijndael.Key = pdb.GetBytes(32);
+                rijndael.IV = pdb.GetBytes(16);
+                memoryStream = new MemoryStream();
+                cryptoStream = new CryptoStream(memoryStream, rijndael.CreateDecryptor(), CryptoStreamMode.Write);
+                cryptoStream.Write(cipher, 0, cipher.Length);
+                cryptoStream.Close();
+                return memoryStream.ToArray();
+            }
+            catch   //invalid padding due to wrong key or other issue
+            {
+                return new byte[0];
+            }
         }
 
         public static byte[] Decrypt(string cipher, string password)

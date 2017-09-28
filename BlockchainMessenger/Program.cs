@@ -21,16 +21,37 @@ namespace BlockchainMessenger
 
         static void Main(string[] args)
         {
-            Messenger test1 = new Messenger("test1");
-            Messenger test2 = new Messenger("test2");
+            byte[] key1 = new byte[32];
+            key1[1] = 128;
+            key1[2] = 255;
+
+            byte[] key2 = new byte[32];
+            key2[10] = 128;
+            key2[20] = 255;
+            Messenger test1 = new Messenger("test1", key1);
+            Messenger test2 = new Messenger("test2", key2);
+
+
+
+            Console.WriteLine(key1[8]);
 
             Console.WriteLine("secret for user1 " + test1.GetSharedSecretString(test2.GetPublicKey()));
             Console.WriteLine("secret for user2 " + test2.GetSharedSecretString(test1.GetPublicKey()));
 
-           string a1 = AESCrypto.EncryptToString("12", test1.GetPublicKeyString());
-            byte[] a2 = AESCrypto.Decrypt(a1, test1.GetPublicKeyString());
-            //string a2 = AESCrypto.DecryptToString(a1, test1.GetPublicKeyString());
-            Console.WriteLine(Encoding.UTF8.GetString(a2));
+           string a1 = AESCrypto.EncryptToString("123", test1.GetSharedSecretString(test2.GetPublicKey()));//asdf +U0XgypCmeRigcYKGtFITQ==
+            //byte[] a2 = AESCrypto.Decrypt(a1, test2.GetPublicKeyString());
+            string a3 = AESCrypto.DecryptToString(a1, test1.GetSharedSecretString(test2.GetPublicKey()));
+            Console.WriteLine(a1);
+            Messenger messenger = new Messenger("asd", test1.GetPrivateKey());
+            string input = "";
+                ;
+            messenger.CheckMessagesFrom(test2.GetPublicKey());
+            while(true)
+            {
+                input = Console.ReadLine(); 
+                messenger.SendMessageTo(input, test2.GetPublicKey());
+
+            }
 
             Console.ReadKey();
         }

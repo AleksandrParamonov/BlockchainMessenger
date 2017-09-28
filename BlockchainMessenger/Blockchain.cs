@@ -7,7 +7,7 @@ namespace BlockchainMessenger
     public class Block
         {
         int index;
-        string data;
+        public string data;
         string timestamp;
         string nonce;
         string previousHash;
@@ -47,6 +47,21 @@ namespace BlockchainMessenger
             this.data = data;
             FindGoodHash(3);                           
             }  
+
+        public Block(string fileName)
+        {
+
+            string buffer;
+            string[] arguments = new string[12];
+            buffer = System.IO.File.ReadAllText(fileName);
+            arguments = buffer.Split(new string[] { ":", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            index = int.Parse(arguments[1]);
+            data = arguments[3];
+            timestamp = arguments[5];
+            previousHash = arguments[7];
+            nonce = arguments[9];
+            hash = arguments[11];
+        }
         
         public void toFile(string fileName)
             {           
@@ -62,9 +77,10 @@ namespace BlockchainMessenger
 
 	public class Blockchain
 	{
+        int blocksCount = 0;
 		private string path;
-
-        public void ValidateBlockchain()
+        Block[] Blocks = new Block[100];
+        public void GetAndValidateBlockchain()
             {
             string buffer;
             string Hash = "null";
@@ -76,25 +92,53 @@ namespace BlockchainMessenger
                 arguments = buffer.Split(new string[] {":", Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
                 Hash = Program.CalculateHash(arguments[1] + arguments[3] + arguments[5] + Hash + arguments[9]) ;
                 if (arguments[11] != Hash)
+                {
                     Console.WriteLine(i + " is wrong\n" + arguments[11] + " expected\n" + Hash + " received");
-                else 
-                    Console.WriteLine(i + " is good");
+                    throw new Exception("blockchain is damaged or modified!");
+                }
+                Blocks[i] = new Block(i + ".txt");
+                blocksCount++;
                 i++;
                 } 
+             if (i == 0)
+            {
+                Blocks[0] = new Block();
+                Blocks[0].toFile("");
+                blocksCount = 1;
             }
+        }
+
+        public void AddBlock(string data)
+        {
+            Blocks[blocksCount] = new Block(Blocks[blocksCount - 1], data);
+            Blocks[blocksCount].toFile("");
+            blocksCount++;
+        }
 
 		public Blockchain()
 		{
+            GetAndValidateBlockchain();
+            //Blocks[0] = new Block();
+            //Blocks[0].toFile("");
 
-		}
+        }
 
 		public Blockchain(string newpath)
         {
 			path = newpath;
-			newpath += "123";
-			Console.WriteLine(path + " " + newpath);
+            GetAndValidateBlockchain();
+            //Blocks[0] = new Block();
+            //Blocks[0].toFile("");
+        }
+        public int GetBlocksCount()
+        {
+            return blocksCount;
+        }
 
-	    }
+        public string GetBlockData(int blockNumber)
+        {
+            return Blocks[blockNumber].data;
+        }
 
 	}
 }

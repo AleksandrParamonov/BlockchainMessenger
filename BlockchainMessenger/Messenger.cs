@@ -8,6 +8,7 @@ namespace BlockchainMessenger
 {
     class Messenger
     {
+        Blockchain blockchain;
         string userName;
         private Rebex.Security.Cryptography.Curve25519 EllipticCurve;
         private System.Security.Cryptography.Aes aes;
@@ -38,6 +39,7 @@ namespace BlockchainMessenger
         }
         public Messenger(string arg)  
         {
+            blockchain = new Blockchain("/blockchain");
             byte[] privateKey = new byte[32];
             System.Security.Cryptography.RandomNumberGenerator rng = System.Security.Cryptography.RandomNumberGenerator.Create();
             rng.GetBytes(privateKey);
@@ -48,6 +50,7 @@ namespace BlockchainMessenger
         }
         public Messenger(string arg, string privateKey)
         {
+            blockchain = new Blockchain("/blockchain");
             userName = arg;
             privateKey = privateKey.ToLower();
             if (privateKey.Length != 64)
@@ -61,6 +64,7 @@ namespace BlockchainMessenger
 
         public Messenger(string arg, byte[] privateKey)
         {
+            blockchain = new Blockchain("/blockchain");
             userName = arg;
             if (privateKey.Length != 32)
                 throw new System.ArgumentException("wrong key length, must be 32 symbols");
@@ -68,7 +72,24 @@ namespace BlockchainMessenger
             EllipticCurve.FromPrivateKey(privateKey);
         }
 
+        public void SendMessageTo(string message, byte[] otherPublicKey)
+        {
+            blockchain.AddBlock(AESCrypto.EncryptToString(message, this.GetSharedSecretString(otherPublicKey)));
+        }
 
+        public void CheckMessagesFrom(byte[] otherPublicKey)
+        {
+            int blocksCount = blockchain.GetBlocksCount();
+            for(int i = 1; i < blocksCount; i++)
+            {
+                string result = AESCrypto.DecryptToString(blockchain.GetBlockData(i), this.GetSharedSecretString(otherPublicKey));
+                if (result.Length != 0)
+                    Console.WriteLine("block " + i + ":" + result);
+                
+            }
+        }
+
+      
 
     }
 }
