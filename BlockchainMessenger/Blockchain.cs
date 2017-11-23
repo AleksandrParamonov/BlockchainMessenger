@@ -53,7 +53,7 @@ namespace BlockchainMessenger
 
             string buffer;
             string[] arguments = new string[12];
-            buffer = System.IO.File.ReadAllText(fileName);
+            buffer = System.IO.File.ReadAllText("./blockchain/" + fileName);
             arguments = buffer.Split(new string[] { ":", Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             index = int.Parse(arguments[1]);
             data = arguments[3];
@@ -63,9 +63,9 @@ namespace BlockchainMessenger
             hash = arguments[11];
         }
         
-        public void toFile(string fileName)
+        public void toFile()
             {           
-            System.IO.File.WriteAllText(index + ".txt", "index:" + index 
+            System.IO.File.WriteAllText("./blockchain/" + index + ".txt", "index:" + index 
                 + Environment.NewLine + "data:" + data 
                 + Environment.NewLine + "timestamp:" + timestamp
                 + Environment.NewLine + "previoushash:" + previousHash 
@@ -86,9 +86,9 @@ namespace BlockchainMessenger
             string Hash = "null";
             string[] arguments = new string[12];
             int i = 0;
-             while(System.IO.File.Exists(i + ".txt"))
+             while(System.IO.File.Exists("./blockchain/" + i.ToString() + ".txt"))
                 {
-                buffer = System.IO.File.ReadAllText(i + ".txt");
+                buffer = System.IO.File.ReadAllText("./blockchain/" + i + ".txt");
                 arguments = buffer.Split(new string[] {":", Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
                 Hash = Program.CalculateHash(arguments[1] + arguments[3] + arguments[5] + Hash + arguments[9]) ;
                 if (arguments[11] != Hash)
@@ -103,7 +103,7 @@ namespace BlockchainMessenger
              if (i == 0)
             {
                 Blocks[0] = new Block();
-                Blocks[0].toFile("");
+                Blocks[0].toFile();
                 blocksCount = 1;
             }
         }
@@ -111,7 +111,7 @@ namespace BlockchainMessenger
         public void AddBlock(string data)
         {
             Blocks[blocksCount] = new Block(Blocks[blocksCount - 1], data);
-            Blocks[blocksCount].toFile("");
+            Blocks[blocksCount].toFile();
             blocksCount++;
         }
 
