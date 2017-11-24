@@ -44,12 +44,13 @@ namespace BlockchainMessenger
             messenger.CheckMessagesFrom(test2.GetPublicKey());
             while(true)
             {
+                
                 input = Console.ReadLine(); 
                 if (input.Length >= 0)
                     messenger.SendMessageTo(input, test2.GetPublicKey());
 
             }
-
+            
             Console.ReadKey();
         }
         
